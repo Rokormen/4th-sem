@@ -1,0 +1,99 @@
+<?php
+    if(isset($_COOKIE['token'])){
+        header("Location: welcome.php");
+        die;
+    }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="style/style.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script>
+        function Sign_in() {
+            $("#ename").html("");
+            $("#epass").html("");
+
+            if ($("#name").val() == "") {
+                $("#ename").html("<div class='alert alert-warning' role='alert'>Name isn't set</div>");
+            } else if ($("#pass").val() == "") {
+                $("#epass").html("<div class='alert alert-warning' role='alert'>Enter password</div>");
+            } else {
+                $.ajax({
+                    method: "POST",
+                    url: "back/login_form.php",
+                    data: {
+                        name: $("#name").val(),
+                        pass: $("#pass").val()
+                    },
+                    success: function (succ) {
+                        console.log(succ);
+                        succ = JSON.parse(succ);
+                        switch (succ.type) {
+                            case "success":
+                                document.cookie = "token="+succ.token+";path=/; max-age=" + 60*60*24; 
+                                location.assign("welcome.php");
+                            break;
+                            case "error":
+                                switch (succ.er) {
+                                    case "name":
+                                        $("#ename").html("<div class='alert alert-warning' role='alert'>Name is incorrect</div>");
+                                    break;
+                                    case "pass":
+                                        $("#epass").html("<div class='alert alert-warning' role='alert'>Password is incorrect</div>");
+                                    break;
+                                    case "db":
+                                        alert("Server is going through some trouble. Try again later");
+                                    break;
+                                }
+                            break;
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="grid-container">
+  <div class="item1">Login form</div>
+  <div class="item2">
+    <a href="index.php">Main page</a>
+    <a href="register.php">Register</a>
+  </div>
+  <div class="item3">
+    <div class="space">Type in your nickname and password</div>
+    <form>
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Nickname</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" placeholder="Your nickname">
+            </div>
+        </div>
+        <div id="ename"></div>
+        <div class="form-group row">
+            <label for="pass" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="pass" placeholder="Password">
+            </div>
+        </div>
+        <div id="epass"></div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-warning" onclick="Sign_in()">Sign in</button>
+            </div>
+        </div>
+    </form>
+    </div>  
+  <div class="item4"></div>
+</div>
+    
+</body>
+</html>
