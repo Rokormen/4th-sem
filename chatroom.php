@@ -45,8 +45,6 @@
                     succ = JSON.parse(succ);
                     if (succ.type == "error" && succ.er == "db"){
                         alert("Server is not responding");
-                    } else {
-                        console.log(succ);
                     }
                 }
             })

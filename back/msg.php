@@ -8,7 +8,7 @@
     $query = "SELECT users.login FROM users INNER JOIN tokens ON tokens.id = users.id WHERE tokens.token='$token'";
     if(!mysqli_query($conn, $query)){
         $data = (object) array ("type" => "error", "er" => "db");
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     }
 
@@ -18,7 +18,7 @@
     $query = "SELECT msg FROM rooms WHERE id= '$room_id'";
     if(!mysqli_query($conn, $query)){
         $data = (object) array ("type" => "error", "er" => "db");
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     }
 
@@ -29,16 +29,16 @@
     
     array_push($msgm, $msg);
 
-    $msgm = json_encode($msgm);
+    $msgm = json_encode($msgm, JSON_UNESCAPED_UNICODE);
     
     $query = "UPDATE rooms SET msg='$msgm' WHERE id='$room_id'";
     if(!mysqli_query($conn, $query)){
         $data = (object) array ("type" => "error", "er" => "db");
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     } else {
         $data = (object) array ("type" => "success", "tab" => $msgm);
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     }
 ?>
