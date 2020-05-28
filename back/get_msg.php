@@ -6,7 +6,7 @@
     $query = "SELECT user, msg FROM rooms WHERE id= '$room_id'";
     if(!mysqli_query($conn, $query)){
         $data = (object) array ("type" => "error", "er" => "db");
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die;
     } 
 
@@ -16,5 +16,5 @@
 
     $data = (object) array ("type" => "success", "user" => $user, "msg" => $msg);
 
-    echo json_encode($data);
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
 ?>
