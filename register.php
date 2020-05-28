@@ -43,7 +43,7 @@
                                 case "error":
                                     switch (succ.er) {
                                         case "name":
-                                            $.alert("Name already exists");
+                                            alert("Name already exists");
                                         break;
                                         case "db":
                                             alert("Cannot connect to the database. Try again later");
