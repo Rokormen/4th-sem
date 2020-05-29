@@ -13,7 +13,7 @@
     }
 //==========================================================================================
     function login($conn, $name, $pass){
-    $query = "SELECT id, login, pass_hash FROM users WHERE login = '$name'";
+    $query = "SELECT id, login, pass_hash, status FROM users WHERE login = '$name'";
     if (!mysqli_query($conn, $query)){
         $data = (object) array ("type" => "error", "er" => "db");
         echo json_encode($data);
@@ -33,6 +33,13 @@
                 $data = (object) array ("type" => "error", "er" => "pass");
                 echo json_encode($data);
                 return ("inpass");
+                die;
+            }
+
+            if ($assoc['status'] == -1){
+                $data = (object) array ("type" => "error", "er" => "ban");
+                echo json_encode($data);
+                return ("ban");
                 die;
             }
 

@@ -27,7 +27,6 @@
                         pass: $("#pass").val()
                     },
                     success: function (succ) {
-                        console.log(succ);
                         succ = JSON.parse(succ);
                         switch (succ.type) {
                             case "success":
@@ -44,6 +43,9 @@
                                     break;
                                     case "db":
                                         alert("Server is going through some trouble. Try again later");
+                                    break;
+                                    case "ban":
+                                        alert("Sorry, but you are banned from this server");
                                     break;
                                 }
                             break;
