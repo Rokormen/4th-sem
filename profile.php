@@ -29,7 +29,7 @@
     <script>
 
         function adminhtml() {
-            if (<?php echo $status ?> == 1) {
+            if (<?php echo $status ?> == 1 || <?php echo $status ?> == 2) {
                 $("#admin").html("<a href='admin.php' class='btn btn-warning btn-sm'>Admin page</a>");
             }
         }
@@ -79,7 +79,14 @@
                             $("#eemail").html("<div class='alert alert-warning' role='alert'>New email is set</div>");
                         break;
                         case "error":
-                            alert("Server is not responding. Try again later");
+                            switch(succ.er){
+                                case "db":
+                                    alert("Server is not responding. Try again later");
+                                break;
+                                case "email":
+                                    alert("Not a valid email");
+                                break;
+                            }
                         break;
                     }
                 }
