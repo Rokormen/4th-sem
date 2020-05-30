@@ -1,8 +1,11 @@
 <?php
     include_once "../head/sql_header.php";
 
-    if(isset($_COOKIE['token'])){
+    if(isset($_COOKIE['token']) || $token == "unit"){
+        
+        if(isset($_COOKIE['token'])){
         $token = $_COOKIE['token'];
+        
 
         $query = "SELECT users.id, users.status FROM users INNER JOIN tokens ON users.id = tokens.id WHERE token='$token'";
             if (!mysqli_query($conn, $query)){
@@ -14,11 +17,10 @@
         $id = mysqli_fetch_assoc(mysqli_query($conn, $query));
         $userstat = $id['status'];
         $id = $id['id'];
-        
+        }
+
         //==================================================================
-        function setpass($id, $conn){
-        
-            $pass = $_POST['pass'];
+        function setpass($id, $conn, $pass){
             
             $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
             
@@ -38,28 +40,34 @@
         }  
         
         
-        function setemail($id, $conn){
+        function setemail($id, $conn, $email){
         
-            $email = $_POST['email'];
             
-            $query = "UPDATE users SET email='$email' WHERE id='$id'";
-            
-            if (!mysqli_query($conn, $query)){
-                $data = (object) array ("type" => "error", "er" => "db");
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
+                $data = (object) array ("type" => "error", "er" => "email");
                 echo json_encode($data);
-                return "noconn";
-                die;
+                return "notemail";
             } else {
-                $data = (object) array ("type" => "success");
-                echo json_encode($data);
-                return "alldone";
-                die;
+            
+                    $query = "UPDATE users SET email='$email' WHERE id='$id'";
+            
+                    if (!mysqli_query($conn, $query)){
+                        $data = (object) array ("type" => "error", "er" => "db");
+                        echo json_encode($data);
+                        return "noconn";
+                        die;
+                    } else {
+                        $data = (object) array ("type" => "success");
+                        echo json_encode($data);
+                        return "alldone";
+                        die;
+                    }
             }
         } 
 
-        function promote($conn){
+        function promote($conn, $login){
             $status = 1;
-            $login = $_POST['name'];
+
             
             $query = "SELECT status FROM users WHERE login='$login'";
             $result = mysqli_query($conn, $query);
@@ -93,9 +101,9 @@
             }
         }
 
-        function ban($conn, $userstat){
+        function ban($conn, $userstat, $login){
             $status = -1;
-            $login = $_POST['login'];
+
 
             $query = "SELECT status FROM users WHERE login='$login'";
             $result = mysqli_query($conn, $query);
@@ -129,9 +137,9 @@
             }
         }
 
-        function unban($conn){
+        function unban($conn, $login){
             $status = 0;
-            $login = $_POST['login'];
+
 
             $query = "SELECT status FROM users WHERE login='$login'";
             $result = mysqli_query($conn, $query);
@@ -170,23 +178,33 @@
         //================================================================
 
         if(!strcasecmp($_POST['type'], "password")){
-            setpass($id, $conn);
+            $pass = $_POST['pass'];
+            setpass($id, $conn, $pass);
+            die;
         }
 
         if (!strcasecmp($_POST['type'], "email")){
-            setemail($id, $conn);
+            $email = $_POST['email'];
+            setemail($id, $conn, $email);
+            die;
         }
 
         if (!strcasecmp($_POST['type'], "admin") && ($userstat == 1 || $userstat == 2)) {
-            promote($conn);
+            $login = $_POST['name'];
+            promote($conn, $login);
+            die;
         }
 
         if (!strcasecmp($_POST['type'], "ban") && ($userstat == 1 || $userstat == 2)) {
-            ban($conn, $userstat);
+            $login = $_POST['login'];
+            ban($conn, $userstat, $login);
+            die;
         }
 
         if (!strcasecmp($_POST['type'], "unban") && ($userstat == 1 || $userstat == 2)) {
-            unban($conn);
+            $login = $_POST['login'];
+            unban($conn, $login);
+            die;
         }
 
     }
