@@ -1,7 +1,7 @@
 <?php
     include_once "../head/sql_header.php";
 
-    if(isset($_COOKIE['token']) || $token == "unit"){
+    if(isset($_COOKIE['token']) || !strcasecmp($token, "unit")){
         
         if(isset($_COOKIE['token'])){
         $token = $_COOKIE['token'];
@@ -176,7 +176,8 @@
         }
 
         //================================================================
-
+        
+        if (strcasecmp($token, "unit") || $userstat == 2){
         if(!strcasecmp($_POST['type'], "password")){
             $pass = $_POST['pass'];
             setpass($id, $conn, $pass);
@@ -206,6 +207,6 @@
             unban($conn, $login);
             die;
         }
-
+        }
     }
 ?>
