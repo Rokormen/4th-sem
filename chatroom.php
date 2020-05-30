@@ -55,9 +55,10 @@
         function parse(msg, ser) {
             chat = "<table>";
             user = "<table>";
-            msg.forEach(b => {
-                chat = chat + "<tr><td style='width:100px'><b>"+b.login+"</b></td><td style='width:20px'> - </td><td style='width:100% padding-left:120px'>"+b.msg+"</td></tr>";
-            })
+            for (i = msg.length - 1; i >= 0; i--)
+            {
+                chat = chat + "<tr><td style='width:100px'><b>"+msg[i].login+"</b></td><td style='width:20px'> - </td><td style='width:100% padding-left:120px'>"+msg[i].msg+"</td></tr>";
+            }
             chat = chat + "</table>";
 
             ser.forEach(b => {

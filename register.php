@@ -18,12 +18,16 @@
 
             if ($("#name").val() == "") {
                 $("#ename").html("<div class='alert alert-warning' role='alert'>Name isn't set</div>");
+                return "zeroname";
             } else if ($("#email").val() == "") {
                 $("#eemail").html("<div class='alert alert-warning' role='alert'>Email isn't set</div>");
+                return "zeroemail";
             } else if (($("#pass").val() != $("#apass").val()) || ($("#pass").val() == "") || ($("#apass").val() == "")) {
                 $("#epass").html("<div class='alert alert-warning' role='alert'>Passwords are not equal or null</div>");
+                return "zeropass";
             } else if ($("#question").val() == "" || $("#anwser").val() == "") {
-                $("#ean").html("<div class='alert alert-warning' role='alert'>Pet or anwser aren't set</div>");
+                $("#ean").html("<div class='alert alert-warning' role='alert'>Question or anwser aren't set</div>");
+                return "zeroq";
             }
             else {
                 $.ajax(
@@ -44,15 +48,22 @@
                                     switch (succ.er) {
                                         case "name":
                                             alert("Name already exists");
+                                            return "name";
                                         break;
                                         case "db":
                                             alert("Cannot connect to the database. Try again later");
+                                            return "db";
+                                        break;
+                                        case "email":
+                                            alert("Email is not valid");
+                                            return "email";
                                         break;
                                     }
                                 break;
                                 case "success":
                                     alert("Now you can login in");
                                     location.assign("index.php");
+                                    return "done";
                                 break;
                             }
                         }
