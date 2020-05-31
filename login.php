@@ -1,10 +1,3 @@
-<?php
-    if(isset($_COOKIE['token'])){
-        header("Location: welcome.php");
-        die;
-    }
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +27,6 @@
                         pass: $("#pass").val()
                     },
                     success: function (succ) {
-                        console.log(succ);
                         succ = JSON.parse(succ);
                         switch (succ.type) {
                             case "success":
@@ -52,6 +44,9 @@
                                     case "db":
                                         alert("Server is going through some trouble. Try again later");
                                     break;
+                                    case "ban":
+                                        alert("Sorry, but you are banned from this server");
+                                    break;
                                 }
                             break;
                         }
@@ -67,6 +62,21 @@
   <div class="item2">
     <a href="index.php">Main page</a>
     <a href="register.php">Register</a>
+    <?php
+        if(isset($_COOKIE['token'])){
+            include_once "head/sql_header.php";
+            $token = $_COOKIE['token'];
+            $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token ='$token'";
+            $result = mysqli_query($conn, $query);
+            if (!$result){
+                alert("Server is not responding");
+            } else {
+                $assoc = mysqli_fetch_assoc($result);
+                $name = $assoc['login'];
+                echo "<a href='welcome.php'>Continue to the site with $name</a>";
+            }
+    }
+    ?>
   </div>
   <div class="item3">
     <div class="space">Type in your nickname and password</div>

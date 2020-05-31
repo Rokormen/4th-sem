@@ -24,7 +24,14 @@
                     succ = JSON.parse(succ);
                     switch (succ.type) {
                         case "error":
-                            alert("Server is not responding. Try again later");
+                            switch (succ.er) {
+                                case "db":
+                                    alert("Server is not responding. Try again later");
+                                    break;
+                                case "cant":
+                                    alert("Cannot promote this user");
+                                    break;
+                            }
                         break;
                         case "success":
                             alert("He is an admin now");
@@ -46,7 +53,14 @@
                     succ = JSON.parse(succ);
                     switch (succ.type) {
                         case "error":
-                            alert("Server is not responding. Try again later");
+                            switch (succ.er) {
+                                case "db":
+                                    alert("Server is not responding. Try again later");
+                                    break;
+                                case "cant":
+                                    alert("Cannot ban this user");
+                                    break;
+                            }
                         break;
                         case "success":
                             alert("User is banned now");
@@ -68,7 +82,14 @@
                     succ = JSON.parse(succ);
                     switch (succ.type) {
                         case "error":
-                            alert("Server is not responding. Try again later");
+                            switch (succ.er) {
+                                case "db":
+                                    alert("Server is not responding. Try again later");
+                                    break;
+                                case "cant":
+                                    alert("Cannot unban this user");
+                                    break;
+                            }
                         break;
                         case "success":
                             alert("User is unbanned now");
