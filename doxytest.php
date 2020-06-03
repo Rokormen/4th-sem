@@ -1,6 +1,6 @@
 <?php
 /**
- * \file test.php
+ * \file doxytest.php
  * A test file for the Doxygen to process
  */
 
