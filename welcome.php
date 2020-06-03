@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 /**
  * \file welcome.php
@@ -18,8 +19,6 @@
     }
 
 ?>
-
-<!DOCTYPE html>
 <html>
 <head>
     <script
