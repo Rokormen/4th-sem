@@ -1,4 +1,8 @@
 <?php
+/**
+ * \file welcome.php
+ * Файл играет роль лобби для сайта. Здесь пользователь может найти комнату, либо создать ее самостоятельно
+ */
     include_once "head/sql_header.php";
 
     if(isset($_COOKIE['token'])){
@@ -27,6 +31,12 @@
     <title>Lobby</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script>
+        /**
+        * \brief Функция создающая комнату
+        * Функция отправляет имя в файл-обработчик crate.php, принимает id комнаты и вызывает функцию connect
+        * \param name Имя комнаты
+        * \return void
+        */
         function create(name){
             $.ajax({
                 method: "POST",
@@ -51,7 +61,12 @@
             })
         }
 
-
+        /**
+        * \brief Функция получения списка комнат
+        * Функция отправляет запрос файлу обработчику get_table.php, принимает список в формате JSON и размещает ее.
+        * \param void
+        * \return void
+        */
         function get_table() {
             $.ajax({
                 method: "GET",
@@ -78,6 +93,11 @@
             get_table();
         }, 1000);
 
+        /**
+        * \brief Функция подключения к комнате
+        * Функция принимает id комнаты и помещает его в cookie, затем перенаправляет юзера на страницу perexod.php
+        * \param id ID комнаты
+        */
         function connect(id){
             document.cookie = "room_id="+id;
             location.assign("back/perexod.php");
