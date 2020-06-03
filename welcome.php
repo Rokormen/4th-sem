@@ -12,7 +12,7 @@
         $token = $_COOKIE["token"];
     }
 
-    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'";
+    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'"; /**\brief тест*/
 
     if(!mysqli_query($conn, $query)){
         echo "alert('Server down. Try again later')";
