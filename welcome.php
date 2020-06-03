@@ -12,14 +12,21 @@
         $token = $_COOKIE["token"];
     }
 
-    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'"; /**\brief тест*/
+    /**\brief Запрос к базе данных*/
+    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'"; 
 
     if(!mysqli_query($conn, $query)){
         echo "alert('Server down. Try again later')";
     } else {
         $table = mysqli_fetch_assoc(mysqli_query($conn, $query));
     }
-
+        /**
+        *\fn connect(id)
+        *\brief Функция подключения к комнате
+        *Функция принимает id комнаты и помещает его в cookie, затем перенаправляет юзера на страницу perexod.php
+        *
+        *\param id ID комнаты
+        */
 ?>
 <html>
 <head>
@@ -92,13 +99,7 @@
             get_table();
         }, 1000);
 
-        /**
-        *\fn connect(id)
-        *\brief Функция подключения к комнате
-        *Функция принимает id комнаты и помещает его в cookie, затем перенаправляет юзера на страницу perexod.php
-        *
-        *\param id ID комнаты
-        */
+       
         function connect(id){
             document.cookie = "room_id="+id;
             location.assign("back/perexod.php");
