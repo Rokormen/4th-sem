@@ -1,3 +1,26 @@
+<?php
+/*! \mainpage Chatroom
+*
+* \section intro_sec Введение
+*
+* Данный сайт предназначен для того, чтобы люди могли общаться посредством чат-комнат. Разработан как проект для университета.
+*
+* \section install_sec Пособие по установке
+*
+* \subsection step1 Шаг 1: Что вам понадобится.
+* Это пособие предполагает, что в Вашем распоряжении имеются сервер с опреационной системой Ubuntu 18.04
+* \subsection step2 Шаг 2: Установка окружения
+* Для установки окружения (а именно Apache, PHP, MySQL) вам необходимо ввести следующие команды в терминал.
+* \subsection Apache Apache: sudo apt-get install apache2
+* \subsection PHP PHP: sudo apt-get install php libapache2-mod-php php-mysql
+* \subsection MySQL MySQL: sudo apt-get install mysql-server
+* sudo mysql_secure_installation - для того, чтобы задать политику безопасности на установленной базе данных
+* \subsection step3 Шаг 3: Перенос базы данных
+* Для того, чтобы создать базу данных для работы с сайтом зайдите в MySQL ($ mysql -u root)
+* \subsection command1 CREATE DATABASE name;
+* Данной командой создайте пустую 
+*/
+?>
 <!DOCTYPE html>
 <html>
 <head>
