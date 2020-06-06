@@ -34,32 +34,6 @@
             }
         }
 
-        function changePass() {
-            $("#epass").html("");
-            if(($("#pass").val() != $("#apass").val()) || ($("#pass").val() == "")){
-                $("#epass").html("<div class='alert alert-warning' role='alert'>Passwords are not equal</div>");
-            } else {
-            $.ajax({
-                method: "POST",
-                url: "back/change.php",
-                data: {
-                    type: "password",
-                    pass: $("#pass").val(),
-                },
-                success: function (succ) {
-                    succ = JSON.parse(succ);
-                    switch (succ.type) {
-                        case "success":
-                            $("#epass").html("<div class='alert alert-warning' role='alert'>New password is set</div>");
-                        break;
-                        case "error":
-                            alert("Server is not responding. Try again later");
-                        break;
-                    }
-                }
-            })}
-        }
-
         function changeEmail() {
             $("#eemail").html("");
             if($("#email").val() == ""){
@@ -103,27 +77,6 @@
   </div>
   <div class="item3">
         <?php echo $login?>'s profile. <br>
-        <div class="space">Want to change your password?</div> 
-        <form>
-        <div class="form-group row">
-            <label for="pass" class="col-sm-2 col-form-label">New pass</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="pass" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="apass" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="apass" placeholder="For verification">
-            </div>
-        </div>
-        <div id="epass"></div>
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <button type="button" class="btn btn-warning" onclick="changePass()">Change</button>
-            </div>
-        </div>
-        </form>
         <div class="space">Want to change your email?</div>
         <form>
         <div class="form-group row">
