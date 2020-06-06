@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 /**
  * \file welcome.php
@@ -12,22 +11,17 @@
         $token = $_COOKIE["token"];
     }
 
-    /**\brief Запрос к базе данных*/
-    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'"; 
+    $query = "SELECT users.login FROM users INNER JOIN tokens ON users.id = tokens.id WHERE tokens.token = '$token'";
 
     if(!mysqli_query($conn, $query)){
         echo "alert('Server down. Try again later')";
     } else {
         $table = mysqli_fetch_assoc(mysqli_query($conn, $query));
     }
-        /**
-        *\fn connect(id)
-        *\brief Функция подключения к комнате
-        *Функция принимает id комнаты и помещает его в cookie, затем перенаправляет юзера на страницу perexod.php
-        *
-        *\param id ID комнаты
-        */
+
 ?>
+
+<!DOCTYPE html>
 <html>
 <head>
     <script
@@ -39,12 +33,6 @@
     <title>Lobby</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script>
-        /**
-        * \brief Функция создающая комнату
-        * Функция отправляет имя в файл-обработчик crate.php, принимает id комнаты и вызывает функцию connect
-        *
-        * \param name Имя комнаты
-        */
         function create(name){
             $.ajax({
                 method: "POST",
@@ -68,11 +56,6 @@
                 }}
             })
         }
-
-/**
- \brief Функция получения списка комнат
- Функция отправляет запрос файлу обработчику get_table.php, принимает список в формате JSON и размещает ее.
-*/
         function get_table() {
             $.ajax({
                 method: "GET",
@@ -98,8 +81,6 @@
         setInterval(() => {
             get_table();
         }, 1000);
-
-       
         function connect(id){
             document.cookie = "room_id="+id;
             location.assign("back/perexod.php");
