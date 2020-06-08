@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file login_form.php
+ * 
+ * Файл-обработчик для страницы авторизации login.php. Содержит функцию авторизации и отправляет обратно токен пользователя.
+ *
+ */
     include_once "../head/sql_header.php";
     $name = "";
     $pass = "";
@@ -12,6 +18,14 @@
         login($conn, $name, $pass);
     }
 //==========================================================================================
+    /**
+    * \brief Авторизация
+    * Функция авторизации на сайт.
+    * \param $conn Соединение с базой данных
+    * \param $name Имя пользователя
+    * \param $pass Пароль пользователя
+    * \return "alldone", если все прошло успешно, либо ошибку "noconn" (База данных), "inname" (Неправильное имя), "inpass" (Неправильный пароль), "ban" (Пользователь в бане)
+    */
     function login($conn, $name, $pass){
     $query = "SELECT id, login, pass_hash, status FROM users WHERE login = '$name'";
     if (!mysqli_query($conn, $query)){
