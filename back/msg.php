@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file msg.php
+ * 
+ * Файл-обработчик для отправки сообщения по токену комнаты. 
+ *
+ */
     include_once "../head/sql_header.php";
 
     $room_id = $_POST['room'];

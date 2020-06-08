@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file chatroom.php
+ * 
+ * Файл играет роль комнаты, в которой пользователи могут переписываться.
+ *
+ */
     include_once "head/sql_header.php";
 
     if(isset($_COOKIE['room_id'])){

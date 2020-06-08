@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file get_table.php
+ * 
+ * Файл-обработчик для того, чтобы достать список комнат и отправить ее обратно в вызывающий файл (welcome.php)
+ *
+ */
     include_once "../head/sql_header.php";
 
     $query = "SELECT id, name FROM rooms WHERE status = '0'";
