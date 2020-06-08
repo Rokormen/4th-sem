@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file perexod.php
+ * 
+ * Файл-обработчик для перехода в chatroom.php. Добавляет пользователя в список пользователей комнаты, добавляет ему токен комнаты и переносит в chatroom.php
+ *
+ */
     include_once "../head/sql_header.php";
 
     $token = $_COOKIE['token'];

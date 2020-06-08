@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file crate.php
+ * 
+ * Файл-обработчик для создания пустой комнаты.
+ *
+ */
     include_once "../head/sql_header.php";
 
     $name = $_POST['name'];

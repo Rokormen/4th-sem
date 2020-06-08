@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file newuser.php
+ * 
+ * Файл-обработчик для страницы регистрации. Содержит функцию регистрации нового пользователя.
+ *
+ */
     include_once "../head/sql_header.php";
     $name = "";
     $email = "";
@@ -18,6 +24,17 @@
         register($conn, $name, $email, $pass, $q, $a);
     }
     //==============================================================================================
+    /**
+    * \brief Регистрация
+    * Функция регистрации нового пользователя на сайт.
+    * \param $conn Соединение с базой данных
+    * \param $name Имя пользователя
+    * \param $email Почта пользователя
+    * \param $pass Пароль пользователя
+    * \param $q Секретный вопрос
+    * \param $a Секретный ответ
+    * \return "alldone", если все прошло успешно, либо ошибку "noconn" (База данных), "nameex" (Имя занято), "notemail" (Почта не почта)
+    */
     function register($conn, $name, $email, $pass, $q, $a){
 
     $query = "SELECT login FROM users WHERE login = '$name'";

@@ -1,3 +1,11 @@
+<?php
+/**
+ * \file register.php
+ * 
+ * Файл, играющимй роль страницы регистрации.
+ *
+ */
+?>
 <!DOCTYPE html>
 <html>
 <head>    
