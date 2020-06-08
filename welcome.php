@@ -56,6 +56,7 @@
                 }}
             })
         }
+
         function get_table() {
             $.ajax({
                 method: "GET",
@@ -81,6 +82,8 @@
         setInterval(() => {
             get_table();
         }, 1000);
+
+
         function connect(id){
             document.cookie = "room_id="+id;
             location.assign("back/perexod.php");
