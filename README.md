@@ -30,5 +30,5 @@ This is a repository for the 4th-sem projec
 `mysql -u root name < lab6.sql`  
 Импортируйте базу данных на базу созданную вами базу.  
 
-[Документация сайта PHP](http://95.217.210.101/doxygen/html/)
+[Документация сайта PHP](http://95.217.210.101/doxygen/html/)  
 [Документация сайта JS](http://95.217.210.101/jsdoc/)
