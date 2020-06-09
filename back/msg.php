@@ -14,7 +14,7 @@
      * \param $token Токен отправителя
      * \param $msg Сообщение пользователя
      * \param $conn Соединение с базой данных
-     * \return Так как это функция обработчик AJAX запросов, то она возвращает ответы с помощью echo. Формат: {type: success\error, tab\er: ....}
+     * \return Так как это функция обработчик AJAX запросов, то она возвращает ответы с помощью echo. Формат: {type: success/error, tab/er: ....}
      */
     function msg($room_id, $token, $msg, $conn){
         $query = "SELECT users.login FROM users INNER JOIN tokens ON tokens.id = users.id WHERE tokens.token='$token'";
