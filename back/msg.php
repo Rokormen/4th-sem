@@ -7,7 +7,16 @@
  */
     include_once "../head/sql_header.php";
 
-    function msg($room_id, $token, $msg){
+    /**
+     * \brief Функция отправки сообщения
+     * Функция берет ID комнаты, токен пользователя и сообщение. Сообщение и логин отправителя прикрепляются к текущему логу сообщений и затем отправляются в базу данных
+     * \param $room_id ID комнаты
+     * \param $token Токен отправителя
+     * \param $msg Сообщение пользователя
+     * \param $conn Соединение с базой данных
+     * \return Так как это функция обработчик AJAX запросов, то она возвращает ответы с помощью echo. Формат: {type: success\error, tab\er: ....}
+     */
+    function msg($room_id, $token, $msg, $conn){
         $query = "SELECT users.login FROM users INNER JOIN tokens ON tokens.id = users.id WHERE tokens.token='$token'";
         if(!mysqli_query($conn, $query)){
             $data = (object) array ("type" => "error", "er" => "db");
@@ -50,6 +59,6 @@
         $room_id = $_POST['room'];
         $token = $_POST['token'];
         $msg = $_POST['msg'];
-        msg($room_id, $token, $msg);
+        msg($room_id, $token, $msg, $conn);
     }
 ?>
