@@ -354,6 +354,41 @@
     //admin.php
     //=============================================================================
     /**
+     * A function that sends an AJAX query to delete a room named in the form
+     * On success will alert about it 
+     * On failure will tell a reason for it
+     */
+    function deleteroom(){
+        if($("#delete").val() != "") {
+            $.ajax({
+            method: "POST",
+            url: "back/change.php",
+            data: {
+                type: "delete",
+                name: $("#delete").val()
+            },
+            success: function (succ) {
+                succ = JSON.parse(succ);
+                switch (succ.type) {
+                    case "error":
+                        switch (succ.er) {
+                            case "db":
+                                alert("Server is not responding. Try again later");
+                                break;
+                            case "noroom":
+                                alert("No such room");
+                                break;
+                        }
+                    break;
+                    case "success":
+                        alert("Room deleted");
+                    break;
+                }
+            }
+        })}
+    }
+
+    /**
      * A function that sends an AJAX query to promote a user when their login is written in the form
      * On success will alert of a success
      * On failure will tell a reason for it
