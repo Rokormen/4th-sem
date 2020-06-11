@@ -1,10 +1,24 @@
 <?php
+/**
+ * \file test.php
+ * 
+ * Файл для проведения юнит тестов различных PHP функций
+ *
+ */
 use PHPUnit\Framework\TestCase;
 require "../head/sql_header.php";
 require_once "../back/newuser.php"; 
 require_once "../back/login_form.php";
+/**
+ * \brief Класс для юнит-тестирования
+ * Класс, тестирующий различные функции перед выгрузкой данных на сервер
+ */
 class TestSystem extends TestCase
     {
+        /**
+         * \brief Тест регистрации
+         * Юнит тест для функции регистрации. Тестирует функцию на создание нового пользователя, а также ошибки возникающие во время создания
+         */
         public function testRegistration()
         {   
             require "../head/sql_header.php";
@@ -26,6 +40,10 @@ class TestSystem extends TestCase
             mysqli_query($conn, "DELETE FROM users WHERE login='newuser'");
         }
 
+        /**
+         * \brief Тест авторизации
+         * Тестирование авторизации на правильную работу, а также ошибки авторизации
+         */
         public function testLogin()
         {
             require "../head/sql_header.php";
@@ -42,7 +60,11 @@ class TestSystem extends TestCase
             mysqli_query($conn, "DELETE FROM tokens WHERE id='$id'");
             mysqli_query($conn, "DELETE FROM users WHERE login='newuser'");
         }
-
+        
+        /**
+         * \brief Тест смены пароля и email
+         * Тест функций смены пароля и email на странице профиля пользователя
+         */
         public function testChangePHP()
         {
             require "../head/sql_header.php";
@@ -65,6 +87,10 @@ class TestSystem extends TestCase
             mysqli_query($conn, "DELETE FROM users WHERE login='testchange'");
         }
 
+        /**
+         * \brief Тест администрирования
+         * Тест функций администрирования: Бан юзера, Разбан юзера, Повышения юзера в админы
+         */
         public function testChangePHPAdmin()
         {
             require "../head/sql_header.php";

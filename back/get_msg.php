@@ -1,4 +1,10 @@
 <?php
+/**
+ * \file get_msg.php
+ * 
+ * Файл-обработчик для того, чтобы достать таблицу с сообщениями и отослать ее обратно в вызывающий файл chatroom.php
+ *
+ */
     include_once "../head/sql_header.php";
 
     $room_id = $_POST['room'];
