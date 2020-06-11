@@ -89,7 +89,7 @@ class TestSystem extends TestCase
 
         /**
          * \brief Тест администрирования
-         * Тест функций администрирования: Бан юзера, Разбан юзера, Повышения юзера в админы
+         * Тест функций администрирования: Бан юзера, Разбан юзера, Повышения юзера в админы, Удаление комнаты
          */
         public function testChangePHPAdmin()
         {
@@ -99,6 +99,7 @@ class TestSystem extends TestCase
             $token = "unit";
             require_once "../back/change.php";
             $assoc = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE login = 'testadmin'"));
+            mysqli_query($conn, "INSERT INTO rooms (id, name, msg, user, status) VALUES (1, 'testroom', '[]', '[]', 0)");
             $id = $assoc['id'];
             $userstat = 1;
             //Ban a person
@@ -116,6 +117,10 @@ class TestSystem extends TestCase
             //Ban an admin from superadmin state
             $userstat = 2;
             $this->assertSame("alldone", ban($conn, $userstat, "testvictum"));
+            //Delete a room (not a room)
+            $this->assertSame("noroom", deleteroom($conn, "testroom1"));
+            //Delete a room 
+            $this->assertSame("alldone", deleteroom($conn, "testroom"));
             //Clear db
             $assoc = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM users WHERE login = 'testadmin'"));
             $id = $assoc['id'];
@@ -125,6 +130,7 @@ class TestSystem extends TestCase
             $id = $assoc['id'];
             mysqli_query($conn, "DELETE FROM tokens WHERE id='$id'");
             mysqli_query($conn, "DELETE FROM users WHERE login='testvictum'");
+            mysqli_query($conn, "DELETE FROM rooms WHERE name='testroom'");
         }
     }
 ?>
