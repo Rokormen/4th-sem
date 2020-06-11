@@ -12,7 +12,6 @@
     $token = $_COOKIE['token'];
 
     $room_id = $_COOKIE['room_id'];
-    setcookie("room_id", "", -3600);
 
     $query = "SELECT users.login FROM users INNER JOIN tokens ON tokens.id = users.id WHERE tokens.token='$token'";
     if(!mysqli_query($conn, $query)){

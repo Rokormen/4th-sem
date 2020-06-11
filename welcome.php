@@ -85,7 +85,7 @@
 
 
         function connect(id){
-            document.cookie = "room_id="+id;
+            document.cookie = "room_id="+id+";path='/';max-age="+60*60*24*7;
             location.assign("back/perexod.php");
         }
 
