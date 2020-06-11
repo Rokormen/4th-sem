@@ -19,6 +19,36 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script>
 
+        function deleteroom(){
+            if($("#delete").val() != "") {
+                $.ajax({
+                method: "POST",
+                url: "back/change.php",
+                data: {
+                    type: "delete",
+                    name: $("#delete").val()
+                },
+                success: function (succ) {
+                    succ = JSON.parse(succ);
+                    switch (succ.type) {
+                        case "error":
+                            switch (succ.er) {
+                                case "db":
+                                    alert("Server is not responding. Try again later");
+                                    break;
+                                case "noroom":
+                                    alert("No such room");
+                                    break;
+                            }
+                        break;
+                        case "success":
+                            alert("Room deleted");
+                        break;
+                    }
+                }
+            })}
+        }
+
         function promote() {
             if($("#admin").val() != "") {
                 $.ajax({
@@ -154,6 +184,19 @@
         <div class="form-group row">
             <div class="col-sm-10">
                 <button type="button" class="btn btn-warning" onclick="promote()">Promote</button>
+            </div>
+        </div>
+    </form>
+    <form>
+        <div class="form-group row">
+            <label for="pass" class="col-sm-2 col-form-label">Delete a chatroom</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="delete" placeholder="Name of the room">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-warning" onclick="deleteroom()">Delete</button>
             </div>
         </div>
     </form>

@@ -7,25 +7,6 @@
  */
     include_once "../head/sql_header.php";
 
-    if(isset($_COOKIE['token']) || !strcasecmp($token, "unit")){
-        
-        if(isset($_COOKIE['token'])){
-        $token = $_COOKIE['token'];
-        
-
-        $query = "SELECT users.id, users.status FROM users INNER JOIN tokens ON users.id = tokens.id WHERE token='$token'";
-            if (!mysqli_query($conn, $query)){
-                $data = (object) array ("type" => "error", "er" => "db");
-                echo json_encode($data);
-                die;
-        }
-
-        $id = mysqli_fetch_assoc(mysqli_query($conn, $query));
-        $userstat = $id['status'];
-        $id = $id['id'];
-        }
-
-        //==================================================================
         /**
          * \brief Смена пароля
          * Функция смены пароля. Устанавливает новый пароль для аккаунта.
@@ -213,10 +194,65 @@
                         return "cant";
                         die;
                 }
-            }
-
-            
+            } 
         }
+
+        /**
+         * \brief Удаление комнаты
+         * Удаляет комнату при указании названия комнаты
+         * \param $conn Соединение с базой
+         * \param $room Название комнаты
+         * \return "alldone", если все прошло успешно, либо ошибку "noconn" (База данных), "noroom" (Не существует комнаты)
+         */
+        function deleteroom($conn, $room){ 
+            $query = "SELECT name FROM rooms WHERE name='$room'";
+            $result = mysqli_query($conn, $query);
+            if (!$result){
+                $data = (object) array ("type" => "error", "er" => "noconn");
+                echo json_encode($data);
+                return "noconn";
+                die;
+            }
+            if (mysqli_num_rows($result) < 1){
+                $data = (object) array ("type" => "error", "er" => "noroom");
+                echo json_encode($data);
+                return "noroom";
+                die;
+            }
+            $query = "DELETE FROM rooms WHERE name='$room'";
+            if (!mysqli_query($conn, $query)){
+                $data = (object) array ("type" => "error", "er" => "db");
+                echo json_encode($data);
+                return "noconn";
+                die;
+            } else {
+                $data = (object) array ("type" => "success");
+                echo json_encode($data);
+                return "alldone";
+                die;
+            }
+        }
+
+    if(isset($_COOKIE['token']) || !strcasecmp($token, "unit")){
+        
+        if(isset($_COOKIE['token'])){
+        $token = $_COOKIE['token'];
+        
+
+        $query = "SELECT users.id, users.status FROM users INNER JOIN tokens ON users.id = tokens.id WHERE token='$token'";
+            if (!mysqli_query($conn, $query)){
+                $data = (object) array ("type" => "error", "er" => "db");
+                echo json_encode($data);
+                die;
+        }
+
+        $id = mysqli_fetch_assoc(mysqli_query($conn, $query));
+        $userstat = $id['status'];
+        $id = $id['id'];
+        }
+
+        //==================================================================
+        
 
         //================================================================
         
@@ -236,6 +272,12 @@
         if (!strcasecmp($_POST['type'], "admin") && ($userstat == 1 || $userstat == 2)) {
             $login = $_POST['name'];
             promote($conn, $login);
+            die;
+        }
+
+        if (!strcasecmp($_POST['type'], "delete") && ($userstat == 1 || $userstat == 2)) {
+            $room = $_POST['name'];
+            deleteroom($conn, $room);
             die;
         }
 
